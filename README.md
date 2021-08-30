@@ -12,7 +12,7 @@
 
 <br>
 
-![image description](app\screenshots\lab26\homePage.jpg)
+![image description](screenshots\lab26\homePage.jpg)
 
 - To see the other pages press [here](app\screenshots\lab26)
 
@@ -30,6 +30,6 @@
 
 <br>
 
-![image description](app\screenshots\lab27\homePage.jpg)
+![image description](screenshots\lab27\homePage.jpg)
 
 - To see the other pages press [here](app\screenshots\lab27)
