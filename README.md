@@ -10,7 +10,7 @@
 - "`add task`": allow users to type in details about a new task, specifically a title and a body. When users click the “submit” button, show a “submitted!” label on the page.
 - "`all tasks`": It have a back button and image,without any functionality.
 
-<br>
+
 
 ![image description](screenshots\lab26\homePage.jpg)
 
@@ -28,7 +28,7 @@
 
 3. **Homepage**: It contains three different buttons with hardcoded task titles. When a user taps one of the titles, it should go to the Task Detail page, and the title at the top of the page should match the task title that was tapped on the previous page. It contains also a button to visit the Settings page, and once the user has entered their username, it should display “{username}’s tasks” above the three task buttons.
 
-<br>
+
 
 ![image description](screenshots\lab27\homePage.jpg)
 
