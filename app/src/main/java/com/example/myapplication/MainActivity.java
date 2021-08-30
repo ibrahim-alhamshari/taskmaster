@@ -3,10 +3,12 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,34 +16,83 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
  
-        Button addTaskButton = findViewById(R.id.button);
-        Button allTasksButton = findViewById(R.id.button2);
+        Button addABook = findViewById(R.id.addBook);
+        Button addYourAge = findViewById(R.id.addYourAge);
+        Button showOneTaskButton = findViewById(R.id.showOneTask);
+        Button settingsSaveButton = findViewById(R.id.homePageSettingsButton);
 
-        addTaskButton.setOnClickListener(new View.OnClickListener() {
+        addABook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(),"The button was clicked" , Toast.LENGTH_LONG).show();
 
-                //move from(MainActivity.this) to (profile1.class) which is a new activity using an intent
-                Intent goToProfile = new Intent(MainActivity.this , AddTask.class);
+                Intent goToTaskDetail = new Intent(MainActivity.this , TaskDetail.class);
                 //append a value to intent
-//                goToProfile.putExtra("userName", userNameValue);
-
-                startActivity(goToProfile);
+                goToTaskDetail.putExtra("title", "ADD A BOOK");
+                startActivity(goToTaskDetail);
             }
         });
 
-        allTasksButton.setOnClickListener(new View.OnClickListener() {
+        addYourAge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, AllTasks.class);
+                Intent intent = new Intent(MainActivity.this, TaskDetail.class);
+                intent.putExtra("title", "ADD YOUR AGE");
                 startActivity(intent);
 
             }
         });
 
+        showOneTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, TaskDetail.class);
+                intent.putExtra("title", "SHOW ONE TASK");
+                startActivity(intent);
+
+            }
+        });
+
+        settingsSaveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, Settings.class);
+                startActivity(intent);
+
+            }
+        });
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        String welcomeMessage = "’s tasks";
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+        String userName = sharedPreferences.getString("userName" , "User" );
+
+        TextView textView = findViewById(R.id.userNameHomePage);
+        textView.setText(userName + welcomeMessage);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }
