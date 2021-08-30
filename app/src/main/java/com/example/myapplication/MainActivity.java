@@ -18,18 +18,16 @@ public class MainActivity extends AppCompatActivity {
  
         Button addTaskButton = findViewById(R.id.button);
         Button allTasksButton = findViewById(R.id.button2);
+        Button showOneTaskButton = findViewById(R.id.showOneTask);
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(getApplicationContext(),"The button was clicked" , Toast.LENGTH_LONG).show();
 
-                //move from(MainActivity.this) to (profile1.class) which is a new activity using an intent
-                Intent goToProfile = new Intent(MainActivity.this , AddTask.class);
+                Intent goToTaskDetail = new Intent(MainActivity.this , TaskDetail.class);
                 //append a value to intent
-//                goToProfile.putExtra("userName", userNameValue);
-
-                startActivity(goToProfile);
+                goToTaskDetail.putExtra("title", "ADD TASK");
+                startActivity(goToTaskDetail);
             }
         });
 
@@ -37,11 +35,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, AllTasks.class);
+                Intent intent = new Intent(MainActivity.this, TaskDetail.class);
+                intent.putExtra("title", "ALL TASKS");
                 startActivity(intent);
 
             }
         });
+
+        showOneTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MainActivity.this, TaskDetail.class);
+                intent.putExtra("title", "SHOW ONE TASK");
+                startActivity(intent);
+
+            }
+        });
+
 
     }
 }
