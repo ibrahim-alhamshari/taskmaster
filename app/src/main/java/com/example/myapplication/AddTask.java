@@ -21,7 +21,6 @@ public class AddTask extends AppCompatActivity {
         EditText editText1 = findViewById(R.id.editTextTextPersonName);
         String storingTitle= editText1.getText().toString();
 
-
         EditText editText2 = findViewById(R.id.editTextTextPersonName2);
         String storingDescriptio = editText2.getText().toString();
 
