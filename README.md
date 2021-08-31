@@ -32,3 +32,21 @@
 
 ![image description](screenshots/lab27/homePage.jpg)
 
+<br>
+
+## **Lab28**
+<br>
+
+**Feature Tasks**
+- Creating a Task class. This Task should have a *title*, a *body*, and a *state*. The state should be one of “new”, “assigned”, “in progress”, or “complete”.
+- Refactoring the homepage to use a **RecyclerView** for displaying Task data. This should have hardcoded Task data for now.
+
+* **Methodology**:
+    1. First step: Creating the model class "**TaskModel**".
+    2. Second: Creating a blank fragment to make a single item each time.
+    3. Creating the "**Adapter**" class to bind the data.
+    4. Creating the RecyclerView object in the *main* activity, set the layout manager(linear layout manager) and, set the adapter for this recyclerView. 
+
+<br>
+
+![Home page](screenshots/lab28/homePage.jpg)
