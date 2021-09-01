@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,12 +17,17 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ArrayList<TaskModel> taskModelList = new ArrayList<TaskModel>();
+    private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         setUserInfo();
+        setAdapter();
+
 
         Button addABook = findViewById(R.id.addBook);
         Button addYourAge = findViewById(R.id.addYourAge);
@@ -71,23 +77,31 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void setUserInfo() {
-
-        ArrayList<TaskModel> taskModelList = new ArrayList<>();
+    public void setUserInfo() {
 
         taskModelList.add(new TaskModel("Sleeping" , "I will sleep after the breakfast", "complete"));
-        taskModelList.add(new TaskModel("Playing" , "I will play fotball on 6:00pm", "in progress"));
+        taskModelList.add(new TaskModel("Playing" , "I will play fotball on 8:00pm", "in progress"));
         taskModelList.add(new TaskModel("Shopping" , "Planning to go to the market with my friend", "assigned"));
         taskModelList.add(new TaskModel("Cocking" , "You will make the lunch tomorrow", "new"));
 
-        // get the recycler view
-        RecyclerView allTestsRecycleView= findViewById(R.id.TestListRecyclerView3);
-        // set a layout manager for this view
-        allTestsRecycleView.setLayoutManager(new LinearLayoutManager(this));
-        // set the adapter for this recyclerView
-        allTestsRecycleView.setAdapter(new Adapter(taskModelList));
+//        // get the recycler view
+//        RecyclerView allTestsRecycleView= findViewById(R.id.TestListRecyclerView3);
+//
+//        // set a layout manager for this view
+//        allTestsRecycleView.setLayoutManager(new LinearLayoutManager(this));
+//
+//        // set the adapter for this recyclerView
+//        allTestsRecycleView.setAdapter(new Adapter(taskModelList));
+
     }
 
+    private void setAdapter(){
+        Adapter adapter= new Adapter(taskModelList);
+        recyclerView= findViewById(R.id.TestListRecyclerView3);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+    }
 
     @Override
     protected void onStart() {

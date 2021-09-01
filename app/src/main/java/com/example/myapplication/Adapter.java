@@ -24,15 +24,16 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
 
     // 3- create the ViewHolder class (Wraps the data and the view)
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
-        // 4- The model object
-        public TaskModel taskModel;
-        // 5- view object
-        View itemView;
-        // + setting the itemView value
-        public TaskViewHolder(@NonNull View itemView){
-            super(itemView);
-            this.itemView= itemView;
+        private TextView title;
+        private TextView body;
+        private TextView state;
 
+        // + setting the itemView value
+        public TaskViewHolder(@NonNull View view){
+            super(view);
+            title= view.findViewById(R.id.titleFragment);
+            body = view.findViewById(R.id.bodyFragment);
+            state=view.findViewById(R.id.stateFragment);
         }
     }
 
@@ -41,21 +42,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // 7- create the view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_task, parent, false);
-        TaskViewHolder taskViewHolder= new TaskViewHolder(view);
-        return taskViewHolder;
+        return new TaskViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-    holder.taskModel = allTasks.get(position);
+    String title=allTasks.get(position).title;
+    String body = allTasks.get(position).body;
+    String state= allTasks.get(position).state;
 
-        TextView taskTitle= holder.itemView.findViewById(R.id.titleFragment);
-        TextView taskBody = holder.itemView.findViewById(R.id.bodyFragment);
-        TextView taskState = holder.itemView.findViewById(R.id.stateFragment);
-
-        taskTitle.setText(holder.taskModel.title);
-        taskBody.setText(holder.taskModel.body);
-        taskState.setText(holder.taskModel.state);
+    holder.title.setText(title);
+    holder.body.setText(body);
+    holder.state.setText(state);
     }
 
     @Override
