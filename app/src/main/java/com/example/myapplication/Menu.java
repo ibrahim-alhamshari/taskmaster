@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.myapplication.Database.Dish;
+import com.example.myapplication.Database.OneDish;
 import com.example.myapplication.Database.TaskDAO;
 import com.example.myapplication.Database.TaskDatabase;
 
@@ -34,10 +35,22 @@ public class Menu extends AppCompatActivity {
         setAdapter();
 
         Button homeButtonInMenuPage = findViewById(R.id.homeButtonInMenuPage);
+//        Button oneDishPage = findViewById(R.id.seeMoreButtonInMenu);
+//
+//        oneDishPage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(Menu.this , OneDish.class);
+////            intent.putExtra("dishName" , );
+//                startActivity(intent);
+//            }
+//        });
+
         homeButtonInMenuPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Menu.this, MainActivity.class);
+
                 startActivity(intent);
             }
         });

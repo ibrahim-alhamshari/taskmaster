@@ -1,16 +1,21 @@
 package com.example.myapplication;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.Database.Dish;
+import com.example.myapplication.Database.OneDish;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 // 1- Create the class without extensions ..
@@ -25,18 +30,32 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
     }
 
     // 3- create the ViewHolder class (Wraps the data and the view)
-    public static class TaskViewHolder extends RecyclerView.ViewHolder {
-        private TextView title;
-        private TextView body;
-        private TextView state;
+    public class TaskViewHolder extends RecyclerView.ViewHolder {
+        private TextView dichName;
+        private TextView price;
+        private TextView ingredients;
 
         // + setting the itemView value
         public TaskViewHolder(@NonNull View view){
             super(view);
-            title= view.findViewById(R.id.titleFragment);
-            body = view.findViewById(R.id.bodyFragment);
-            state=view.findViewById(R.id.stateFragment);
+            dichName= view.findViewById(R.id.titleFragment);
+            price = view.findViewById(R.id.bodyFragment);
+
+           view.findViewById(R.id.seeMoreButtonInMenu).setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   System.out.println(getItemId() +"+++++++++++++++++++++");
+                   Intent intent = new Intent(view.getContext(), OneDish.class);
+                   intent.putExtra("dishName" , allTasks.get(3).dishName);
+                   intent.putExtra("price" , allTasks.get(3).price);
+                   intent.putExtra("ingredients" , allTasks.get(3).ingradient);
+                   view.getContext().startActivity(intent);
+               }
+           }
+
+           );
         }
+
     }
 
     @NonNull
@@ -53,9 +72,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
     String price = allTasks.get(position).price;
     String ingradient= allTasks.get(position).ingradient;
 
-    holder.title.setText(dishName);
-    holder.body.setText(price);
-    holder.state.setText(ingradient);
+
+    holder.dichName.setText(dishName);
+    holder.price.setText(price);
+//    holder.ingredients.setText(ingradient);
     }
 
     @Override

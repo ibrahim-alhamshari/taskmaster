@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
         addDishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Intent goToTaskDetail = new Intent(MainActivity.this , AddDish.class);
                 startActivity(goToTaskDetail);
             }

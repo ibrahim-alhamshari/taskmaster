@@ -9,14 +9,14 @@
     <!-- TODO: Update blank fragment layout -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="421dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/titleFragment"
             android:layout_width="116dp"
             android:layout_height="26dp"
-            android:text="Title"
+            android:text="Dish Name"
             app:layout_constraintBottom_toTopOf="@+id/bodyFragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.078"
@@ -26,27 +26,27 @@
 
         <TextView
             android:id="@+id/bodyFragment"
-            android:layout_width="197dp"
-            android:layout_height="49dp"
-            android:text="Body"
+            android:layout_width="135dp"
+            android:layout_height="27dp"
+            android:text="Price"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.113"
+            app:layout_constraintHorizontal_bias="0.079"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.333" />
 
-        <TextView
-            android:id="@+id/stateFragment"
-            android:layout_width="78dp"
-            android:layout_height="35dp"
-            android:text="State"
+        <Button
+            android:id="@+id/seeMoreButtonInMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="See more"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.809"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.746" />
+            app:layout_constraintVertical_bias="0.087" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
