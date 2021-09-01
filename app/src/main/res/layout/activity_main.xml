@@ -8,67 +8,54 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/addBook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ADD A BOOK"
+        android:id="@+id/addDishButton"
+        android:layout_width="123dp"
+        android:layout_height="56dp"
+        android:text="Add Dish"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/addYourAge"
-        app:layout_constraintHorizontal_bias="0.352"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.855" />
+        app:layout_constraintVertical_bias="0.499" />
 
     <TextView
         android:id="@+id/editTextPerson"
-        android:layout_width="137dp"
-        android:layout_height="45dp"
+        android:layout_width="192dp"
+        android:layout_height="56dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="167dp"
         android:fontFamily="sans-serif-medium"
-        android:text="My Tasks"
+        android:text="Restaurant app"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/homePageSettingsButton"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.311"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
+        app:layout_constraintVertical_bias="0.04" />
 
     <Button
-        android:id="@+id/addYourAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ADD YOUR AGE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.821"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.855" />
-
-    <Button
-        android:id="@+id/showOneTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/menuButton"
+        android:layout_width="109dp"
+        android:layout_height="50dp"
         android:layout_marginTop="171dp"
-        android:text="SHOW ONE TASK"
+        android:text="Menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.462"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.931" />
+        app:layout_constraintVertical_bias="0.498" />
 
     <Button
         android:id="@+id/homePageSettingsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="28dp"
+        android:layout_marginEnd="4dp"
         android:text="SETTINGS"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.023" />
 
     <TextView
         android:id="@+id/userNameHomePage"
@@ -77,18 +64,9 @@
         android:text="User’s tasks"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.435"
+        app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.744" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/TestListRecyclerView3"
-        android:layout_width="426dp"
-        android:layout_height="315dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.336"
-        tools:layout_editor_absoluteX="-8dp" />
+        app:layout_constraintVertical_bias="0.144" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
