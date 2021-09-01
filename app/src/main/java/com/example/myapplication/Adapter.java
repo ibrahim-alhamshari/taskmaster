@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.Database.Dish;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +18,9 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
 
     // 2- create the list the the adapter will use to bind data
-    List<TaskModel> allTasks = new ArrayList<TaskModel>();
+    List<Dish> allTasks = new ArrayList<Dish>();
 
-    public Adapter(List<TaskModel> allTasks){
+    public Adapter(List<Dish> allTasks){
         this.allTasks=allTasks;
     }
 
@@ -47,13 +49,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-    String title=allTasks.get(position).title;
-    String body = allTasks.get(position).body;
-    String state= allTasks.get(position).state;
+    String dishName=allTasks.get(position).dishName;
+    String price = allTasks.get(position).price;
+    String ingradient= allTasks.get(position).ingradient;
 
-    holder.title.setText(title);
-    holder.body.setText(body);
-    holder.state.setText(state);
+    holder.title.setText(dishName);
+    holder.body.setText(price);
+    holder.state.setText(ingradient);
     }
 
     @Override

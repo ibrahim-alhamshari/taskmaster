@@ -18,11 +18,11 @@
             android:exported="true"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".AllTasks"
+            android:name=".Menu"
             android:exported="true"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".AddTask"
+            android:name=".AddDish"
             android:exported="true"
             android:parentActivityName=".MainActivity" />
         <activity

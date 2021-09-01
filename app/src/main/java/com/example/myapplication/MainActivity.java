@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,51 +16,30 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<TaskModel> taskModelList = new ArrayList<TaskModel>();
-    private RecyclerView recyclerView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setUserInfo();
-        setAdapter();
 
-
-        Button addABook = findViewById(R.id.addBook);
-        Button addYourAge = findViewById(R.id.addYourAge);
-        Button showOneTaskButton = findViewById(R.id.showOneTask);
+        Button addDishButton = findViewById(R.id.addDishButton);
+        Button menuButton = findViewById(R.id.menuButton);
         Button settingsSaveButton = findViewById(R.id.homePageSettingsButton);
 
-        addABook.setOnClickListener(new View.OnClickListener() {
+        addDishButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent goToTaskDetail = new Intent(MainActivity.this , AddTask.class);
-                //append a value to intent
-//                goToTaskDetail.putExtra("title", "ADD A BOOK");
+                Intent goToTaskDetail = new Intent(MainActivity.this , AddDish.class);
                 startActivity(goToTaskDetail);
             }
         });
 
-        addYourAge.setOnClickListener(new View.OnClickListener() {
+        menuButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(MainActivity.this, TaskDetail.class);
-                intent.putExtra("title", "ADD YOUR AGE");
-                startActivity(intent);
-
-            }
-        });
-
-        showOneTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(MainActivity.this, TaskDetail.class);
-                intent.putExtra("title", "SHOW ONE TASK");
+                Intent intent = new Intent(MainActivity.this, Menu.class);
                 startActivity(intent);
 
             }
@@ -75,32 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    public void setUserInfo() {
-
-        taskModelList.add(new TaskModel("Sleeping" , "I will sleep after the breakfast", "complete"));
-        taskModelList.add(new TaskModel("Playing" , "I will play fotball on 8:00pm", "in progress"));
-        taskModelList.add(new TaskModel("Shopping" , "Planning to go to the market with my friend", "assigned"));
-        taskModelList.add(new TaskModel("Cocking" , "You will make the lunch tomorrow", "new"));
-
-//        // get the recycler view
-//        RecyclerView allTestsRecycleView= findViewById(R.id.TestListRecyclerView3);
-//
-//        // set a layout manager for this view
-//        allTestsRecycleView.setLayoutManager(new LinearLayoutManager(this));
-//
-//        // set the adapter for this recyclerView
-//        allTestsRecycleView.setAdapter(new Adapter(taskModelList));
-
-    }
-
-    private void setAdapter(){
-        Adapter adapter= new Adapter(taskModelList);
-        recyclerView= findViewById(R.id.TestListRecyclerView3);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
     }
 
     @Override
