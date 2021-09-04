@@ -10,17 +10,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.myapplication.Database.Dish;
-import com.example.myapplication.Database.TaskDAO;
+import com.example.myapplication.Database.TaskDao;
 import com.example.myapplication.Database.TaskDatabase;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Menu extends AppCompatActivity {
 
-    private List<Dish> taskList = new ArrayList<>();
+        private List<Task> taskList = new ArrayList<>();
     private RecyclerView recyclerView;
 
 
@@ -45,7 +43,7 @@ public class Menu extends AppCompatActivity {
 
     public void setUserInfo() {
         TaskDatabase db = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "dish").fallbackToDestructiveMigration().allowMainThreadQueries().build();
-        TaskDAO userDao = db.taskDAO();
+        TaskDao userDao = db.taskDao();
        taskList = userDao.getAllTasks();
 //        System.out.println("++++++++++++++++++++++++++"+ taskList.get(0).dishName);
     }

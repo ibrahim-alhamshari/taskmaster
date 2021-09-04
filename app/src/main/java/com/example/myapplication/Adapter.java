@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +9,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Database.Dish;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,24 +18,31 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
 
     // 2- create the list the the adapter will use to bind data
-    List<Dish> allTasks = new ArrayList<Dish>();
+    List<Task> allTasks = new ArrayList<Task>();
 
-    public Adapter(List<Dish> allTasks){
+    public Adapter(List<Task> allTasks){
         this.allTasks=allTasks;
     }
 
     // 3- create the ViewHolder class (Wraps the data and the view)
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
-        private TextView title;
-        private TextView body;
-        private TextView state;
+        public Task task;
+        View itemView;
 
         // + setting the itemView value
         public TaskViewHolder(@NonNull View view){
             super(view);
-            title= view.findViewById(R.id.titleFragment);
-            body = view.findViewById(R.id.bodyFragment);
-            state=view.findViewById(R.id.stateFragment);
+            this.itemView=view;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent= new Intent(view.getContext() , TaskDetail.class);
+                    intent.putExtra("title" , task.title);
+                    intent.putExtra("body" , task.body);
+                    intent.putExtra("state" , task.state);
+                    view.getContext().startActivity(intent);
+                }
+            });
         }
     }
 
@@ -49,13 +56,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
-    String dishName=allTasks.get(position).dishName;
-    String price = allTasks.get(position).price;
-    String ingradient= allTasks.get(position).ingradient;
+        holder.task= allTasks.get(position);
+    TextView title=holder.itemView.findViewById(R.id.titleFragment);
+    TextView body= holder.itemView.findViewById(R.id.bodyFragment);
+    TextView state = holder.itemView.findViewById(R.id.stateFragment);
 
-    holder.title.setText(dishName);
-    holder.body.setText(price);
-    holder.state.setText(ingradient);
+    title.setText(holder.task.title);
+    body.setText(holder.task.body);
+    state.setText(holder.task.state);
     }
 
     @Override

@@ -6,19 +6,19 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "task")
 public class Task {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int id;
 
-    public String dishName;
-    public String price;
-    public String ingradient;
+    public String title;
+    public String body;
+    public String state;
 
     public Task(){}
 
-    public Task(String dishName, String price , String ingradient){
-        this.dishName=dishName;
-        this.price=price;
-        this.ingradient=ingradient;
+    public Task(String title, String body , String state){
+        this.title=title;
+        this.body=body;
+        this.state=state;
     }
 
     public int getId() {
@@ -29,27 +29,27 @@ public class Task {
         this.id = id;
     }
 
-    public String getDishName() {
-        return dishName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setDishName(String dishName) {
-        this.dishName = dishName;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getPrice() {
-        return price;
+    public String getBody() {
+        return body;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setBody(String body) {
+        this.body = body;
     }
 
-    public String getIngradient() {
-        return ingradient;
+    public String getState() {
+        return state;
     }
 
-    public void setIngradient(String ingradient) {
-        this.ingradient = ingradient;
+    public void setState(String state) {
+        this.state = state;
     }
 }

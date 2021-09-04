@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,25 +13,34 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.myapplication.Database.TaskDao;
+import com.example.myapplication.Database.TaskDatabase;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private List<Task> taskList=new ArrayList<>();
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        setUserInfo();
+        setAdapter();
 
-        Button addDishButton = findViewById(R.id.addDishButton);
+        Button addTaskButton = findViewById(R.id.addTaskButton);
         Button menuButton = findViewById(R.id.menuButton);
         Button settingsSaveButton = findViewById(R.id.homePageSettingsButton);
 
-        addDishButton.setOnClickListener(new View.OnClickListener() {
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent goToTaskDetail = new Intent(MainActivity.this , AddDish.class);
+                Intent goToTaskDetail = new Intent(MainActivity.this , AddTask.class);
                 startActivity(goToTaskDetail);
             }
         });
@@ -53,8 +63,23 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+
+    }
+    public void setUserInfo(){
+        TaskDatabase db = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "task").fallbackToDestructiveMigration().allowMainThreadQueries().build();
+        TaskDao userDao = db.taskDao();
+        taskList = userDao.getAllTasks();
     }
 
+    private void setAdapter(){
+        recyclerView= findViewById(R.id.mainPageRecyclerView);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        Adapter adapter= new Adapter(taskList);
+        recyclerView.setAdapter(adapter);
+    }
     @Override
     protected void onStart() {
         super.onStart();
