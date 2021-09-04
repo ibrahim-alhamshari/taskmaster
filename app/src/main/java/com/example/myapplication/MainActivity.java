@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         setAdapter();
 
         Button addTaskButton = findViewById(R.id.addTaskButton);
-        Button menuButton = findViewById(R.id.menuButton);
         Button settingsSaveButton = findViewById(R.id.homePageSettingsButton);
 
         addTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -42,16 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent goToTaskDetail = new Intent(MainActivity.this , AddTask.class);
                 startActivity(goToTaskDetail);
-            }
-        });
-
-        menuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(MainActivity.this, Menu.class);
-                startActivity(intent);
-
             }
         });
 

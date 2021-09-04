@@ -33,7 +33,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
         public TaskViewHolder(@NonNull View view){
             super(view);
             this.itemView=view;
-            itemView.setOnClickListener(new View.OnClickListener() {
+            itemView.findViewById(R.id.seeMoreInMainPage).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent= new Intent(view.getContext() , TaskDetail.class);
@@ -58,12 +58,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         holder.task= allTasks.get(position);
     TextView title=holder.itemView.findViewById(R.id.titleFragment);
-    TextView body= holder.itemView.findViewById(R.id.bodyFragment);
-    TextView state = holder.itemView.findViewById(R.id.stateFragment);
+//    TextView body= holder.itemView.findViewById(R.id.bodyFragment);
+//    TextView state = holder.itemView.findViewById(R.id.stateFragment);
 
     title.setText(holder.task.title);
-    body.setText(holder.task.body);
-    state.setText(holder.task.state);
+//    body.setText(holder.task.body);
+//    state.setText(holder.task.state);
     }
 
     @Override
