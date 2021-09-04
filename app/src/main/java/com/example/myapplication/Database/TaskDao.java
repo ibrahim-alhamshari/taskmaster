@@ -9,11 +9,11 @@ import com.example.myapplication.Task;
 import java.util.List;
 
 @Dao
-public interface TaskDAO {
+public interface TaskDao {
 
-    @Query("SELECT * FROM dish")
-        List<Dish> getAllTasks();
+    @Query("SELECT * FROM task")
+        List<Task> getAllTasks();
 
     @Insert
-    void insertTask(Dish... dish);
+    void insertTask(Task... task);
 }

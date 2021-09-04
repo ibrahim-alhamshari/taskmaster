@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddDish">
+    tools:context=".AddTask">
 
     <TextView
         android:id="@+id/textView2"
@@ -12,7 +12,7 @@
         android:layout_height="91dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="28dp"
-        android:text="Add Dish"
+        android:text="Add Task"
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,14 +34,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:text="Dish name: "
+        android:text="Title:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.25" />
 
     <EditText
-        android:id="@+id/dishNameAddDish"
+        android:id="@+id/titleInAddTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -59,24 +59,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
-        android:text="Dish Price"
+        android:text="Body: "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewDishName"
         app:layout_constraintVertical_bias="0.099" />
 
     <EditText
-        android:id="@+id/dishPriceAddDish"
+        android:id="@+id/bodyInAddTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Price"
+        android:text="body"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.275"
         app:layout_constraintStart_toEndOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/dishNameAddDish"
+        app:layout_constraintTop_toBottomOf="@+id/titleInAddTask"
         app:layout_constraintVertical_bias="0.051" />
 
     <TextView
@@ -84,24 +84,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:text="Ingrediants: "
+        android:text="State:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6"
         app:layout_constraintVertical_bias="0.096" />
 
     <EditText
-        android:id="@+id/ingrediantsAddDish"
+        android:id="@+id/stateInAddTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="Ingrediants"
+        android:text="state"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.119"
         app:layout_constraintStart_toEndOf="@+id/TextView"
-        app:layout_constraintTop_toBottomOf="@+id/dishPriceAddDish"
+        app:layout_constraintTop_toBottomOf="@+id/bodyInAddTask"
         app:layout_constraintVertical_bias="0.069" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

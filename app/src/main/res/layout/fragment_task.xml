@@ -9,44 +9,34 @@
     <!-- TODO: Update blank fragment layout -->
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="421dp"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="68dp">
 
         <TextView
             android:id="@+id/titleFragment"
-            android:layout_width="116dp"
-            android:layout_height="26dp"
+            android:layout_width="178dp"
+            android:layout_height="32dp"
             android:text="Title"
-            app:layout_constraintBottom_toTopOf="@+id/bodyFragment"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.078"
+            app:layout_constraintHorizontal_bias="0.061"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.406" />
 
-        <TextView
-            android:id="@+id/bodyFragment"
-            android:layout_width="197dp"
+        <Button
+            android:id="@+id/seeMoreInMainPage"
+            android:layout_width="134dp"
             android:layout_height="49dp"
-            android:text="Body"
+            android:text="See More"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.113"
+            app:layout_constraintHorizontal_bias="0.942"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintVertical_bias="0.526" />
 
-        <TextView
-            android:id="@+id/stateFragment"
-            android:layout_width="78dp"
-            android:layout_height="35dp"
-            android:text="State"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.809"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.746" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
