@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void setUserInfo(){
-        TaskDatabase db = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "task").fallbackToDestructiveMigration().allowMainThreadQueries().build();
+        TaskDatabase db = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "task1").fallbackToDestructiveMigration().allowMainThreadQueries().build();
         TaskDao userDao = db.taskDao();
         taskList = userDao.getAllTasks();
     }
