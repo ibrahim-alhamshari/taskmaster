@@ -85,3 +85,4 @@
             2. tap on a task, and assert that the resulting activity displays the name of that task
             3. edit the user’s username, and assert that it says the correct thing on the homepage
 
+![Testing](screenshots/lab31/test.png)
