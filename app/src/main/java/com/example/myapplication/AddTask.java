@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -29,14 +30,15 @@ public class AddTask extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(),"submitted!" , Toast.LENGTH_LONG).show();
-
                 saveNewTask(title.getText().toString() , body.getText().toString(), state.getText().toString());
+                Intent intent = new Intent(AddTask.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
 
     private void saveNewTask(String title , String body , String state){
-        TaskDatabase db = Room.databaseBuilder(this, TaskDatabase.class, "task").fallbackToDestructiveMigration().allowMainThreadQueries().build();
+        TaskDatabase db = Room.databaseBuilder(this, TaskDatabase.class, "task1").fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
        Task task = new Task();
        task.title= title;
