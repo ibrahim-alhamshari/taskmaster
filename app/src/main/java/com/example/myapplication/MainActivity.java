@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,11 +9,21 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.datastore.generated.model.GeneratedTaskModel;
 import com.example.myapplication.Database.TaskDao;
 import com.example.myapplication.Database.TaskDatabase;
 
@@ -21,7 +32,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Task> taskList=new ArrayList<>();
+    private List<GeneratedTaskModel> taskList = new ArrayList<>();
     private RecyclerView recyclerView;
 
     @Override
@@ -29,8 +40,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        setUserInfo();
+        try {
+            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSDataStorePlugin());
+            Amplify.configure(getApplicationContext());
+            Log.i("Tutorial", "Initialized Amplify");
+        } catch (AmplifyException failure) {
+            Log.e("Tutorial", "Could not initialize Amplify", failure);
+        }
+        Amplify.DataStore.observe(GeneratedTaskModel.class,
+                started -> Log.i("Tutorial", "Observation began."),
+                change -> Log.i("Tutorial", change.item().toString()),
+                failure -> Log.e("Tutorial", "Observation failed.", failure),
+                () -> Log.i("Tutorial", "Observation complete.")
+        );
+
+
         setAdapter();
+//        setUserInfo();
 
         Button addTaskButton = findViewById(R.id.addTaskButton);
         Button settingsSaveButton = findViewById(R.id.homePageSettingsButton);
@@ -56,15 +83,41 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void setUserInfo(){
-        TaskDatabase db = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "task1").fallbackToDestructiveMigration().allowMainThreadQueries().build();
-        TaskDao userDao = db.taskDao();
-        taskList = userDao.getAllTasks();
+//        TaskDatabase db = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "task1").fallbackToDestructiveMigration().allowMainThreadQueries().build();
+//        TaskDao userDao = db.taskDao();
+        taskList = new ArrayList<>();
     }
 
     private void setAdapter(){
         recyclerView= findViewById(R.id.mainPageRecyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+            @Override
+            public boolean handleMessage(@NonNull Message message) {  //It will notify the recyclerview that there are a data changed
+                recyclerView.getAdapter().notifyDataSetChanged();
+                return false;
+            }
+        });
+
+        Amplify.API.query(
+                ModelQuery.list(com.amplifyframework.datastore.generated.model.GeneratedTaskModel.class),
+                response -> {
+
+                    for (GeneratedTaskModel todo : response.getData()) {
+                        Log.i("MyAmplifyApp", todo.getTaskName());
+                        taskList.add(todo);
+                        System.out.println(todo.getTaskName() +"======================================");
+                    }
+                    handler.sendEmptyMessage(1); // send to the handler
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
+
+
+
+
 
         Adapter adapter= new Adapter(taskList);
         recyclerView.setAdapter(adapter);

@@ -10,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.amplifyframework.datastore.generated.model.GeneratedTaskModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,15 +20,15 @@ import java.util.List;
 public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
 
     // 2- create the list the the adapter will use to bind data
-    List<Task> allTasks = new ArrayList<Task>();
+    List<GeneratedTaskModel> allTasks = new ArrayList<GeneratedTaskModel>();
 
-    public Adapter(List<Task> allTasks){
+    public Adapter(List<GeneratedTaskModel> allTasks){
         this.allTasks=allTasks;
     }
 
     // 3- create the ViewHolder class (Wraps the data and the view)
     public static class TaskViewHolder extends RecyclerView.ViewHolder {
-        public Task task;
+        public GeneratedTaskModel task;
         View itemView;
 
         // + setting the itemView value
@@ -37,9 +39,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
                 @Override
                 public void onClick(View view) {
                     Intent intent= new Intent(view.getContext() , TaskDetail.class);
-                    intent.putExtra("title" , task.title);
-                    intent.putExtra("body" , task.body);
-                    intent.putExtra("state" , task.state);
+                    intent.putExtra("title" , task.getTaskName());
+                    intent.putExtra("body" , task.getBody());
+                    intent.putExtra("state" , task.getState());
                     view.getContext().startActivity(intent);
                 }
             });
@@ -61,7 +63,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
 //    TextView body= holder.itemView.findViewById(R.id.bodyFragment);
 //    TextView state = holder.itemView.findViewById(R.id.stateFragment);
 
-    title.setText(holder.task.title);
+    title.setText(holder.task.getTaskName());
 //    body.setText(holder.task.body);
 //    state.setText(holder.task.state);
     }
@@ -70,6 +72,5 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
     public int getItemCount() {
         return allTasks.size();
     }
-
 
 }
