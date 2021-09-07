@@ -80,17 +80,17 @@ public class ExampleInstrumentedTest {
     @Test
     public void addTaskButton() {
         onView(withId(R.id.addTaskButton)).check(matches(isDisplayed())).perform(click());
-        onView(withId(R.id.titleInAddTask)).check(matches(isDisplayed())).perform(typeText("Humam"));
+        onView(withId(R.id.titleInAddTask)).check(matches(isDisplayed())).perform(typeText("Humam3"));
         onView(withId(R.id.bodyInAddTask)).check(matches(isDisplayed())).perform(typeText("Espresso doing"));
         onView(withId(R.id.stateInAddTask)).check(matches(isDisplayed())).perform(typeText("Completed"));
         onView(withId(R.id.submitInAddDish)).check(matches(isDisplayed())).perform(click());
-        onView(withText("Humam")).check(matches(isDisplayed()));
+        onView(withText("Humam3")).check(matches(isDisplayed()));
     }
 
     @Test
     public void seeMoreButton(){
         onView(withId(R.id.seeMoreInMainPage)).check(matches(isDisplayed())).perform(click());
-        onView(withText("Humam")).check(matches(isDisplayed()));
+        onView(withText("Humam1")).check(matches(isDisplayed()));
         onView(withText("Espresso doing")).check(matches(isDisplayed()));
         onView(withText("Completed")).check(matches(isDisplayed()));
     }

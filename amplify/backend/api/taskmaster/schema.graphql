@@ -1,0 +1,6 @@
+type GeneratedTaskModel @model {
+  id: ID!
+  taskName: String!
+  body: String!
+  state: String
+}
