@@ -1,5 +1,6 @@
 package com.amplifyframework.datastore.generated.model;
 
+import com.amplifyframework.core.model.annotations.BelongsTo;
 import com.amplifyframework.core.model.temporal.Temporal;
 
 import java.util.List;
@@ -19,15 +20,18 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 /** This is an auto generated class representing the GeneratedTaskModel type in your schema. */
 @SuppressWarnings("all")
 @ModelConfig(pluralName = "GeneratedTaskModels")
+@Index(name = "byTeam", fields = {"teamId","taskName"})
 public final class GeneratedTaskModel implements Model {
   public static final QueryField ID = field("GeneratedTaskModel", "id");
   public static final QueryField TASK_NAME = field("GeneratedTaskModel", "taskName");
   public static final QueryField BODY = field("GeneratedTaskModel", "body");
   public static final QueryField STATE = field("GeneratedTaskModel", "state");
+  public static final QueryField TEAM = field("GeneratedTaskModel", "teamId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String taskName;
-  private final @ModelField(targetType="String") String body;
+  private final @ModelField(targetType="String", isRequired = true) String body;
   private final @ModelField(targetType="String") String state;
+  private final @ModelField(targetType="Team") @BelongsTo(targetName = "teamId", type = Team.class) Team team;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
   public String getId() {
@@ -46,6 +50,10 @@ public final class GeneratedTaskModel implements Model {
       return state;
   }
   
+  public Team getTeam() {
+      return team;
+  }
+  
   public Temporal.DateTime getCreatedAt() {
       return createdAt;
   }
@@ -54,11 +62,12 @@ public final class GeneratedTaskModel implements Model {
       return updatedAt;
   }
   
-  private GeneratedTaskModel(String id, String taskName, String body, String state) {
+  private GeneratedTaskModel(String id, String taskName, String body, String state, Team team) {
     this.id = id;
     this.taskName = taskName;
     this.body = body;
     this.state = state;
+    this.team = team;
   }
   
   @Override
@@ -73,6 +82,7 @@ public final class GeneratedTaskModel implements Model {
               ObjectsCompat.equals(getTaskName(), generatedTaskModel.getTaskName()) &&
               ObjectsCompat.equals(getBody(), generatedTaskModel.getBody()) &&
               ObjectsCompat.equals(getState(), generatedTaskModel.getState()) &&
+              ObjectsCompat.equals(getTeam(), generatedTaskModel.getTeam()) &&
               ObjectsCompat.equals(getCreatedAt(), generatedTaskModel.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), generatedTaskModel.getUpdatedAt());
       }
@@ -85,6 +95,7 @@ public final class GeneratedTaskModel implements Model {
       .append(getTaskName())
       .append(getBody())
       .append(getState())
+      .append(getTeam())
       .append(getCreatedAt())
       .append(getUpdatedAt())
       .toString()
@@ -99,6 +110,7 @@ public final class GeneratedTaskModel implements Model {
       .append("taskName=" + String.valueOf(getTaskName()) + ", ")
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("state=" + String.valueOf(getState()) + ", ")
+      .append("team=" + String.valueOf(getTeam()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
       .append("}")
@@ -132,6 +144,7 @@ public final class GeneratedTaskModel implements Model {
       id,
       null,
       null,
+      null,
       null
     );
   }
@@ -140,26 +153,33 @@ public final class GeneratedTaskModel implements Model {
     return new CopyOfBuilder(id,
       taskName,
       body,
-      state);
+      state,
+      team);
   }
   public interface TaskNameStep {
-    BuildStep taskName(String taskName);
+    BodyStep taskName(String taskName);
+  }
+  
+
+  public interface BodyStep {
+    BuildStep body(String body);
   }
   
 
   public interface BuildStep {
     GeneratedTaskModel build();
     BuildStep id(String id) throws IllegalArgumentException;
-    BuildStep body(String body);
     BuildStep state(String state);
+    BuildStep team(Team team);
   }
   
 
-  public static class Builder implements TaskNameStep, BuildStep {
+  public static class Builder implements TaskNameStep, BodyStep, BuildStep {
     private String id;
     private String taskName;
     private String body;
     private String state;
+    private Team team;
     @Override
      public GeneratedTaskModel build() {
         String id = this.id != null ? this.id : UUID.randomUUID().toString();
@@ -168,43 +188,12 @@ public final class GeneratedTaskModel implements Model {
           id,
           taskName,
           body,
-          state);
+          state,
+          team);
     }
-
-      public String getId() {
-          return id;
-      }
-
-      public void setId(String id) {
-          this.id = id;
-      }
-
-      public String getTaskName() {
-          return taskName;
-      }
-
-      public void setTaskName(String taskName) {
-          this.taskName = taskName;
-      }
-
-      public String getBody() {
-          return body;
-      }
-
-      public void setBody(String body) {
-          this.body = body;
-      }
-
-      public String getState() {
-          return state;
-      }
-
-      public void setState(String state) {
-          this.state = state;
-      }
-
-      @Override
-     public BuildStep taskName(String taskName) {
+    
+    @Override
+     public BodyStep taskName(String taskName) {
         Objects.requireNonNull(taskName);
         this.taskName = taskName;
         return this;
@@ -212,6 +201,7 @@ public final class GeneratedTaskModel implements Model {
     
     @Override
      public BuildStep body(String body) {
+        Objects.requireNonNull(body);
         this.body = body;
         return this;
     }
@@ -219,6 +209,12 @@ public final class GeneratedTaskModel implements Model {
     @Override
      public BuildStep state(String state) {
         this.state = state;
+        return this;
+    }
+    
+    @Override
+     public BuildStep team(Team team) {
+        this.team = team;
         return this;
     }
     
@@ -234,11 +230,12 @@ public final class GeneratedTaskModel implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String taskName, String body, String state) {
+    private CopyOfBuilder(String id, String taskName, String body, String state, Team team) {
       super.id(id);
       super.taskName(taskName)
         .body(body)
-        .state(state);
+        .state(state)
+        .team(team);
     }
     
     @Override
@@ -255,8 +252,11 @@ public final class GeneratedTaskModel implements Model {
      public CopyOfBuilder state(String state) {
       return (CopyOfBuilder) super.state(state);
     }
+    
+    @Override
+     public CopyOfBuilder team(Team team) {
+      return (CopyOfBuilder) super.team(team);
+    }
   }
-
-
   
 }

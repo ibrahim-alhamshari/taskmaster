@@ -1,6 +1,14 @@
-type GeneratedTaskModel @model {
+type GeneratedTaskModel @model @key(name:"byTeam" , fields: ["teamId", "taskName"]) {
   id: ID!
   taskName: String!
   body: String!
   state: String
+  teamId: ID!
+  team: Team @connection(fields:["teamId"])
+}
+
+type Team @model {
+id: ID!
+name: String!
+tasks: [GeneratedTaskModel] @connection(keyName: "byTeam", fields: ["id"])
 }
