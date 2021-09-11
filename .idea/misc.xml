@@ -4,11 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2703125" />
+        <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/drawable/background.xml" value="0.2" />
         <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2703125" />
         <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/layout/activity_add_dish.xml" value="0.2203125" />
-        <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/layout/activity_add_task.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/layout/activity_add_task.xml" value="0.264" />
         <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/layout/activity_all_tasks.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/layout/activity_menu.xml" value="0.18958333333333333" />
         <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/layout/activity_profile1.xml" value="0.264" />
         <entry key="..\:/Users/Discovery/code401/taskmaster/app/src/main/res/layout/activity_settings.xml" value="0.25416666666666665" />

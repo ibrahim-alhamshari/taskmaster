@@ -32,9 +32,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<GeneratedTaskModel> taskList = new ArrayList<>();
+    private final List<GeneratedTaskModel> taskList = new ArrayList<>();
     private RecyclerView recyclerView;
-
+    String teamNameFromSetting = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (AmplifyException failure) {
             Log.e("Tutorial", "Could not initialize Amplify", failure);
         }
+
         Amplify.DataStore.observe(GeneratedTaskModel.class,
                 started -> Log.i("Tutorial", "Observation began."),
                 change -> Log.i("Tutorial", change.item().toString()),
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         setAdapter();
-//        setUserInfo();
 
         Button addTaskButton = findViewById(R.id.addTaskButton);
         Button settingsSaveButton = findViewById(R.id.homePageSettingsButton);
@@ -80,12 +80,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-    }
-    public void setUserInfo(){
-//        TaskDatabase db = Room.databaseBuilder(getApplicationContext(), TaskDatabase.class, "task1").fallbackToDestructiveMigration().allowMainThreadQueries().build();
-//        TaskDao userDao = db.taskDao();
-        taskList = new ArrayList<>();
     }
 
     private void setAdapter(){
@@ -107,31 +101,42 @@ public class MainActivity extends AppCompatActivity {
 
                     for (GeneratedTaskModel todo : response.getData()) {
                         Log.i("MyAmplifyApp", todo.getTaskName());
+//                        System.out.println("===================================================+: " + teamNameFromSetting.getClass().getSimpleName());
+//                        System.out.println(" ======================================: " + todo.getTeam().getName().getClass().getSimpleName());
+                        if(teamNameFromSetting.equals(todo.getTeam().getName())){
                         taskList.add(todo);
-                        System.out.println(todo.getTaskName() +"======================================");
+                        System.out.println(" ======================================: " + todo.getTeam().getName());
+                        }
                     }
                     handler.sendEmptyMessage(1); // send to the handler
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
 
-
-
-
-
         Adapter adapter= new Adapter(taskList);
         recyclerView.setAdapter(adapter);
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
+
+    public void getUserAndTeam(){
+
+        TextView userNameText = findViewById(R.id.userNameHomePage);
+        TextView teamNameText = findViewById(R.id.textForTeamInMainPage);
 
         String welcomeMessage = "’s tasks";
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String userName = sharedPreferences.getString("userName" , "User" );
+        String teamName= sharedPreferences.getString("teamName" , "Team");
 
-        TextView textView = findViewById(R.id.userNameHomePage);
-        textView.setText(userName + welcomeMessage);
+        teamNameFromSetting=teamName;
+        System.out.println("===================================================: " + teamNameFromSetting);
+        userNameText.setText(userName + welcomeMessage);
+        teamNameText.setText(teamName+ "'s Tasks");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getUserAndTeam();
     }
 
     @Override
