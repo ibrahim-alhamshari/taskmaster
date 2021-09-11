@@ -102,11 +102,13 @@ public class MainActivity extends AppCompatActivity {
                     for (GeneratedTaskModel todo : response.getData()) {
                         Log.i("MyAmplifyApp", todo.getTaskName());
 //                        System.out.println("===================================================+: " + teamNameFromSetting.getClass().getSimpleName());
-//                        System.out.println(" ======================================: " + todo.getTeam().getName().getClass().getSimpleName());
-                        if(teamNameFromSetting.equals(todo.getTeam().getName())){
-                        taskList.add(todo);
-                        System.out.println(" ======================================: " + todo.getTeam().getName());
+                        if(todo.getTeam() != null){
+                            if(teamNameFromSetting.equals(todo.getTeam().getName())){
+                                taskList.add(todo);
+                                System.out.println(" ======================================+: " + teamNameFromSetting +" 00 "+ todo.getTeam().getName());
+                            }
                         }
+
                     }
                     handler.sendEmptyMessage(1); // send to the handler
                 },
