@@ -94,4 +94,14 @@ public class ExampleInstrumentedTest {
         onView(withText("Espresso doing")).check(matches(isDisplayed()));
         onView(withText("Completed")).check(matches(isDisplayed()));
     }
+
+    @Test
+    public void addingRelationShip(){
+        onView(withId(R.id.homePageSettingsButton)).check(matches(isDisplayed())).perform(click());
+        onView(withId(R.id.spinerInSettingPage)).check(matches(isDisplayed())).perform(click());
+        onView(withText("Amman")).check(matches(isDisplayed())).perform(click());
+        onView(withId(R.id.userNameFromSettings)).check(matches(isDisplayed())).perform(typeText("Ibrahim"));
+        onView(withId(R.id.settingsSaveButton)).check(matches(isDisplayed())).perform(click());
+
+    }
 }
