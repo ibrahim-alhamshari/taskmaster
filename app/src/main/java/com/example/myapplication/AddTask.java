@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.GeneratedTaskModel;
 import com.amplifyframework.datastore.generated.model.Team;
@@ -27,13 +28,28 @@ import java.util.List;
 
 public class AddTask extends AppCompatActivity {
 
+    Team teamName = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        final String[] teamName = {""};
+
+
+
+        List<Team> teamList = new ArrayList<>();
+
+        Amplify.API.query(
+                ModelQuery.list(Team.class),
+                response -> {
+                    for (Team todo : response.getData()) {
+                        Log.i("MyAmplifyApp", todo.getName());
+                        teamList.add(todo);
+                    }
+                },
+                error -> Log.e("MyAmplifyApp", "Query failure", error)
+        );
 
 
         Spinner spinner=findViewById(R.id.spinnerButton);
@@ -51,7 +67,14 @@ public class AddTask extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 spinner.setSelection(position);
                 String text = adapterView.getItemAtPosition(position).toString();
-                teamName[0] =text;
+
+                for (int i = 0; i < teamList.size(); i++) {
+                    if(teamList.get(i).getName().equals(text)){
+                        teamName = teamList.get(i);
+                    }
+                }
+
+//                teamName[0] =text;
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
             }
 
@@ -72,7 +95,7 @@ public class AddTask extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(),"submitted!" , Toast.LENGTH_LONG).show();
-                saveNewTask(title.getText().toString() , body.getText().toString(), state.getText().toString() , teamName[0]);
+                saveNewTask(title.getText().toString() , body.getText().toString(), state.getText().toString() );
                 Intent intent = new Intent(AddTask.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -80,21 +103,21 @@ public class AddTask extends AppCompatActivity {
     }
 
 
-    private void saveNewTask(String title , String body , String state , String teamName){
+    private void saveNewTask(String title , String body , String state){
 
-        Team team = Team.builder().name(teamName).build();
+//        Team team = Team.builder().name(teamName).build();
         GeneratedTaskModel generatedTaskModel = GeneratedTaskModel.builder()  //creating the tasks instance
                     .taskName(title)
                     .body(body)
                     .state(state)
-                    .team(team)
+                    .team(teamName)
                     .build();
 
-        Amplify.API.mutate( // create or update on the database
-                ModelMutation.create(team),
-                response -> Log.i("MyAmplifyApp", "Added task with id: " + response.getData().getId()),
-                error -> Log.e("MyAmplifyApp", "Create failed", error)
-        );
+//        Amplify.API.mutate( // create or update on the database
+//                ModelMutation.create(team),
+//                response -> Log.i("MyAmplifyApp", "Added task with id: " + response.getData().getId()),
+//                error -> Log.e("MyAmplifyApp", "Create failed", error)
+//        );
 
             Amplify.API.mutate( // create or update on the database
                     ModelMutation.create(generatedTaskModel),
