@@ -32,9 +32,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<GeneratedTaskModel> taskList = new ArrayList<>();
+    private final List<GeneratedTaskModel> taskList = new ArrayList<>();
     private RecyclerView recyclerView;
-
+    String teamNameFromSetting = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
 
                     for (GeneratedTaskModel todo : response.getData()) {
                         Log.i("MyAmplifyApp", todo.getTaskName());
-                        if(todo.getTeam() != null){
+                        System.out.println("===================================================+: " + teamNameFromSetting.getClass().getSimpleName());
+                        System.out.println(" ======================================: " + todo.getTeam().getName().getClass().getSimpleName());
+                        if(teamNameFromSetting.equals(todo.getTeam().getName())){
                         taskList.add(todo);
                         System.out.println(" ======================================: " + todo.getTeam().getName());
                         }
@@ -125,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
         String userName = sharedPreferences.getString("userName" , "User" );
         String teamName= sharedPreferences.getString("teamName" , "Team");
 
+        teamNameFromSetting=teamName;
+        System.out.println("===================================================: " + teamNameFromSetting);
         userNameText.setText(userName + welcomeMessage);
         teamNameText.setText(teamName+ "'s Tasks");
     }
