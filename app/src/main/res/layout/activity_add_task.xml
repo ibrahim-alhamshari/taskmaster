@@ -112,7 +112,6 @@
         android:id="@+id/spinnerButton"
         android:layout_width="199dp"
         android:layout_height="60dp"
-        android:background="@drawable/background"
         android:spinnerMode="dialog"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

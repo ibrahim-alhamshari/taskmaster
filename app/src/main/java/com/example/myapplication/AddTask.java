@@ -45,6 +45,7 @@ public class AddTask extends AppCompatActivity {
                 response -> {
                     for (Team todo : response.getData()) {
                         Log.i("MyAmplifyApp", todo.getName());
+                        System.out.println("000000000000000000000000000000000000000000000000" + todo.getName());
                         teamList.add(todo);
                     }
                 },
@@ -55,6 +56,7 @@ public class AddTask extends AppCompatActivity {
         Spinner spinner=findViewById(R.id.spinnerButton);
 
         List<String> list=new ArrayList<>();
+        list.add("Choose one");
         list.add("Irbid");
         list.add("Amman");
         list.add("Jarash");
@@ -71,6 +73,7 @@ public class AddTask extends AppCompatActivity {
                 for (int i = 0; i < teamList.size(); i++) {
                     if(teamList.get(i).getName().equals(text)){
                         teamName = teamList.get(i);
+                        System.out.println(teamName.getName().toString()+ "++++++++++++++++++++++++++++++++++++++++++++++++++++");
                     }
                 }
 
@@ -94,10 +97,14 @@ public class AddTask extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"submitted!" , Toast.LENGTH_LONG).show();
-                saveNewTask(title.getText().toString() , body.getText().toString(), state.getText().toString() );
-                Intent intent = new Intent(AddTask.this, MainActivity.class);
-                startActivity(intent);
+                if(teamName!=null){
+                    Toast.makeText(getApplicationContext(),"submitted!" , Toast.LENGTH_LONG).show();
+                    saveNewTask(title.getText().toString() , body.getText().toString(), state.getText().toString() );
+                    Intent intent = new Intent(AddTask.this, MainActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(getApplicationContext(),"Please choose the team!" , Toast.LENGTH_LONG).show();
+                }
             }
         });
     }
@@ -105,7 +112,6 @@ public class AddTask extends AppCompatActivity {
 
     private void saveNewTask(String title , String body , String state){
 
-//        Team team = Team.builder().name(teamName).build();
         GeneratedTaskModel generatedTaskModel = GeneratedTaskModel.builder()  //creating the tasks instance
                     .taskName(title)
                     .body(body)
@@ -113,11 +119,6 @@ public class AddTask extends AppCompatActivity {
                     .team(teamName)
                     .build();
 
-//        Amplify.API.mutate( // create or update on the database
-//                ModelMutation.create(team),
-//                response -> Log.i("MyAmplifyApp", "Added task with id: " + response.getData().getId()),
-//                error -> Log.e("MyAmplifyApp", "Create failed", error)
-//        );
 
             Amplify.API.mutate( // create or update on the database
                     ModelMutation.create(generatedTaskModel),
