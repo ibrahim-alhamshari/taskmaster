@@ -110,3 +110,30 @@
         - Modify your Add Task form to include either a Spinner or Radio Buttons for which team that task belongs to.
     3. Settings Page
         - In addition to a username, allow the user to choose their team on the Settings page. Use that Team to display only that team’s tasks on the homepage.
+
+
+## **Lab36**
+
+- **Feature Tasks**
+
+1. User Login
+    - Add **Cognito** to your Amplify setup. Add in user login and sign up flows to your application, using Cognito’s pre-built UI as appropriate. Display the logged in user’s username somewhere relevant in your app.
+
+2. User Logout
+    - Allow users to log out of your application.
+
+<br>
+
+![Main Page](screenshots/lab35/Main.jpg)
+
+<br>
+
+![Regester](screenshots/lab35/Regester.jpg)
+
+<br>
+
+![SignUp](screenshots/lab35/SignUp.jpg)
+
+<br>
+
+![Confirm](screenshots/lab35/Confirm.jpg)

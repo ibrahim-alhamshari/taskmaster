@@ -62,17 +62,26 @@ public class Registration extends AppCompatActivity {
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
+
                     signInMethod(userName.getText().toString() , passWord.getText().toString());
+
+                try {
+                    Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                if (test[0] == "error") {
+                    Toast.makeText(getApplicationContext() ,"ERROR, Incorrect Password or Username!" ,Toast.LENGTH_LONG );
+                }else if(test[0]== "success"){
+                    Toast.makeText(getApplicationContext() ,"Happy Register" ,Toast.LENGTH_LONG );
+                }
+                    Toast.makeText(getApplicationContext() ,"null Register" ,Toast.LENGTH_LONG );
             }
         });
 
 
     }
-    public void signInMethod(String userName, String passWord) throws InterruptedException {
+    public void signInMethod(String userName, String passWord){
         Intent intent= new Intent(Registration.this, MainActivity.class);
 
         SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(Registration.this);
@@ -93,24 +102,15 @@ public class Registration extends AppCompatActivity {
                     else{
                         System.out.println("*************************************");
                         test[0] ="faild";
-                        Toast.makeText(getApplicationContext(),"Incorrect username or password!" , Toast.LENGTH_LONG).show();
                         System.out.println("ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     }
                 },
                 error -> {
                     test[0] ="error";
-
                     System.out.println("*************************************");
                     Log.e("AuthQuickstart", error.toString());
                 }
         );
-
-        Thread.sleep(2000);
-        if (test[0] == "error") {
-            Toast.makeText(getApplicationContext() ,"ERROR, Incorrect Password or Username!" ,Toast.LENGTH_LONG );
-        }else if(test[0]== "success"){
-            Toast.makeText(getApplicationContext() ,"Happy Register" ,Toast.LENGTH_LONG );
-        }
     }
 
 }
