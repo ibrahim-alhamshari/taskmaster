@@ -2,6 +2,7 @@ package com.example.myapplication.Authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -35,12 +36,16 @@ public class SignUp extends AppCompatActivity {
     }
 
     public void signUpMethod(String userName , String email, String passWord){
+        Intent intent = new Intent(SignUp.this , ConfirmSignUp.class);
 
         AuthSignUpOptions options = AuthSignUpOptions.builder()
                 .userAttribute(AuthUserAttributeKey.email(), email)
                 .build();
         Amplify.Auth.signUp(userName, passWord, options,
-                result -> Log.i("AuthQuickStart", "Result: " + result.toString()),
+                result ->{
+            startActivity(intent);
+            Log.i("AuthQuickStart", "Result: " + result.toString());
+                } ,
                 error -> Log.e("AuthQuickStart", "Sign up failed", error)
         );
     }

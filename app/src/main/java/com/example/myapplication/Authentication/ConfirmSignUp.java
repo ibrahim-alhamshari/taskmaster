@@ -2,7 +2,6 @@ package com.example.myapplication.Authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +10,8 @@ import android.widget.EditText;
 
 import com.amplifyframework.core.Amplify;
 import com.example.myapplication.R;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ConfirmSignUp extends AppCompatActivity {
 
@@ -33,11 +34,16 @@ public class ConfirmSignUp extends AppCompatActivity {
     }
 
     public void confirmTheCode(String userName , String code){
+
         Amplify.Auth.confirmSignUp(
                 userName,
                 code,
-                result -> Log.i("AuthQuickstart", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete"),
+                result -> {
+                    Log.i("AuthQuickstart", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete");
+                },
                 error -> Log.e("AuthQuickstart", error.toString())
         );
+
+
     }
 }

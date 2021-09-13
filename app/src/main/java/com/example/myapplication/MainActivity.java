@@ -40,51 +40,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        try {
-            Amplify.addPlugin(new AWSApiPlugin());
-            Amplify.addPlugin(new AWSDataStorePlugin());
-            // Add this line, to include the Auth plugin.
-            Amplify.addPlugin(new AWSCognitoAuthPlugin());
-            Amplify.configure(getApplicationContext());
-            Log.i("Tutorial", "Initialized Amplify");
-        } catch (AmplifyException failure) {
-            Log.e("Tutorial", "Could not initialize Amplify", failure);
-        }
-
-//****************************************************** Start SignUp ********************************************************
-
-        //sign up activity(replace amail, userName, password with the ones that the user entered)
-//        AuthSignUpOptions options = AuthSignUpOptions.builder()
-//                .userAttribute(AuthUserAttributeKey.email(), "ibrahimalhamshari742@gmail.com")
-//                .build();
-//        Amplify.Auth.signUp("Ibrahim", "12345678", options,
-//                result -> Log.i("AuthQuickStart", "Result: " + result.toString()),
-//                error -> Log.e("AuthQuickStart", "Sign up failed", error)
-//        );
-
-        //ask the user for the code that be sent to the email
-//        Amplify.Auth.confirmSignUp(
-//                "Ibrahim",
-//                "867198",
-//                result -> Log.i("AuthQuickstart", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete"),
-//                error -> Log.e("AuthQuickstart", error.toString())
-//        );
-
-//****************************************************** End SignUp ********************************************************
-
-//******************************************************Start Registration *******************************************************
-
-// Implement a UI to get the username and password from the user. After the user enters the username
-// and password you can start the sign in flow by calling the following method:
-//        Amplify.Auth.signIn(
-//                "Ibrahim",
-//                "12345678",
-//                result -> Log.i("AuthQuickstart", result.isSignInComplete() ? "Sign in succeeded" : "Sign in not complete"),
-//                error -> Log.e("AuthQuickstart", error.toString())
-//        );
-
-//*********************************************************End Registration *******************************************************
-
 //*********************************************************Start Registration WithWebUI *******************************************************
 
 
@@ -95,8 +50,6 @@ public class MainActivity extends AppCompatActivity {
 //        );
 
 //*********************************************************Start Registration WithWebUI *******************************************************
-
-//*********************************************************Start LogOut *******************************************************
 
         Button button= findViewById(R.id.logOutButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -190,16 +143,19 @@ public class MainActivity extends AppCompatActivity {
 
         TextView userNameText = findViewById(R.id.userNameHomePage);
         TextView teamNameText = findViewById(R.id.textForTeamInMainPage);
+        TextView userNameFromRegester= findViewById(R.id.textView20);
 
         String welcomeMessage = "’s tasks";
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
         String userName = sharedPreferences.getString("userName" , "User" );
         String teamName= sharedPreferences.getString("teamName" , "Team");
+        String userNameFromRegesterPage = sharedPreferences.getString("userRegester" , "UserName");
 
         teamNameFromSetting=teamName;
         System.out.println("===================================================: " + teamNameFromSetting);
         userNameText.setText(userName + welcomeMessage);
         teamNameText.setText(teamName+ "'s Tasks");
+        userNameFromRegester.setText(userNameFromRegesterPage);
     }
 
 
