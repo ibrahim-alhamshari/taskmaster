@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,11 +20,12 @@ import android.widget.TextView;
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.GeneratedTaskModel;
-import com.example.myapplication.Database.TaskDao;
-import com.example.myapplication.Database.TaskDatabase;
+import com.example.myapplication.Authentication.Registration;
+import com.example.myapplication.Tasks.AddTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +43,77 @@ public class MainActivity extends AppCompatActivity {
         try {
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSDataStorePlugin());
+            // Add this line, to include the Auth plugin.
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
             Log.i("Tutorial", "Initialized Amplify");
         } catch (AmplifyException failure) {
             Log.e("Tutorial", "Could not initialize Amplify", failure);
         }
+
+//****************************************************** Start SignUp ********************************************************
+
+        //sign up activity(replace amail, userName, password with the ones that the user entered)
+//        AuthSignUpOptions options = AuthSignUpOptions.builder()
+//                .userAttribute(AuthUserAttributeKey.email(), "ibrahimalhamshari742@gmail.com")
+//                .build();
+//        Amplify.Auth.signUp("Ibrahim", "12345678", options,
+//                result -> Log.i("AuthQuickStart", "Result: " + result.toString()),
+//                error -> Log.e("AuthQuickStart", "Sign up failed", error)
+//        );
+
+        //ask the user for the code that be sent to the email
+//        Amplify.Auth.confirmSignUp(
+//                "Ibrahim",
+//                "867198",
+//                result -> Log.i("AuthQuickstart", result.isSignUpComplete() ? "Confirm signUp succeeded" : "Confirm sign up not complete"),
+//                error -> Log.e("AuthQuickstart", error.toString())
+//        );
+
+//****************************************************** End SignUp ********************************************************
+
+//******************************************************Start Registration *******************************************************
+
+// Implement a UI to get the username and password from the user. After the user enters the username
+// and password you can start the sign in flow by calling the following method:
+//        Amplify.Auth.signIn(
+//                "Ibrahim",
+//                "12345678",
+//                result -> Log.i("AuthQuickstart", result.isSignInComplete() ? "Sign in succeeded" : "Sign in not complete"),
+//                error -> Log.e("AuthQuickstart", error.toString())
+//        );
+
+//*********************************************************End Registration *******************************************************
+
+//*********************************************************Start Registration WithWebUI *******************************************************
+
+
+//        Amplify.Auth.signInWithWebUI(
+//                this,
+//                result -> Log.i("AuthQuickStart", result.toString()),
+//                error -> Log.e("AuthQuickStart", error.toString())
+//        );
+
+//*********************************************************Start Registration WithWebUI *******************************************************
+
+//*********************************************************Start LogOut *******************************************************
+
+        Button button= findViewById(R.id.logOutButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Amplify.Auth.signOut(
+                        () -> Log.i("AuthQuickstart", "Signed out successfully"),
+                        error -> Log.e("AuthQuickstart", error.toString())
+                );
+
+                Intent intent = new Intent(MainActivity.this , Registration.class);
+                startActivity(intent);
+            }
+        });
+
+//*********************************************************End LogOut *******************************************************
+
 
         Amplify.DataStore.observe(GeneratedTaskModel.class,
                 started -> Log.i("Tutorial", "Observation began."),
@@ -86,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView= findViewById(R.id.mainPageRecyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
 
         Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
             @Override
@@ -135,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
         teamNameText.setText(teamName+ "'s Tasks");
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -154,5 +222,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AWSCognitoAuthPlugin.WEB_UI_SIGN_IN_ACTIVITY_CODE) {
+            Amplify.Auth.handleWebUISignInResponse(data);
+        }
     }
 }

@@ -1,7 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.Tasks;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,14 +13,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.amplifyframework.AmplifyException;
-import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelMutation;
 import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.GeneratedTaskModel;
 import com.amplifyframework.datastore.generated.model.Team;
-import com.example.myapplication.Database.TaskDatabase;
+import com.example.myapplication.MainActivity;
+import com.example.myapplication.R;
 
 import java.util.ArrayList;
 import java.util.List;
