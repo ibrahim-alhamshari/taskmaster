@@ -1,10 +1,12 @@
-package com.example.myapplication;
+package com.example.myapplication.Tasks;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import com.example.myapplication.R;
 
 public class TaskDetail extends AppCompatActivity {
 
