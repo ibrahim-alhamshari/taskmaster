@@ -43,6 +43,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
                     intent.putExtra("title" , task.getTaskName());
                     intent.putExtra("body" , task.getBody());
                     intent.putExtra("state" , task.getState());
+                    intent.putExtra("fileData" , task.getFile());
                     view.getContext().startActivity(intent);
                 }
             });

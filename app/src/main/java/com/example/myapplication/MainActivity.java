@@ -24,6 +24,7 @@ import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
 import com.amplifyframework.datastore.generated.model.GeneratedTaskModel;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import com.example.myapplication.Authentication.Registration;
 import com.example.myapplication.Tasks.AddTask;
 
@@ -40,6 +41,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        try {
+            Amplify.addPlugin(new AWSS3StoragePlugin());
+
+            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.addPlugin(new AWSDataStorePlugin());
+            // Add this line, to include the Auth plugin.
+            Amplify.addPlugin(new AWSCognitoAuthPlugin());
+            Amplify.configure(getApplicationContext());
+            Log.i("Tutorial", "Initialized Amplify");
+        } catch (AmplifyException failure) {
+            Log.e("Tutorial", "Could not initialize Amplify", failure);
+        }
+
+
 //*********************************************************Start Registration WithWebUI *******************************************************
 
 
@@ -49,8 +65,9 @@ public class MainActivity extends AppCompatActivity {
 //                error -> Log.e("AuthQuickStart", error.toString())
 //        );
 
-//*********************************************************Start Registration WithWebUI *******************************************************
+//*********************************************************End Registration WithWebUI *******************************************************
 
+//*********************************************************Start LogOut *******************************************************
         Button button= findViewById(R.id.logOutButton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 //*********************************************************End LogOut *******************************************************
 
 
@@ -76,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         );
 
 
-        setAdapter();
+        renderTheTasks();
 
         Button addTaskButton = findViewById(R.id.addTaskButton);
         Button settingsSaveButton = findViewById(R.id.homePageSettingsButton);
@@ -101,7 +117,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void setAdapter(){
+
+
+    private void renderTheTasks(){
         recyclerView= findViewById(R.id.mainPageRecyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -121,11 +139,9 @@ public class MainActivity extends AppCompatActivity {
 
                     for (GeneratedTaskModel todo : response.getData()) {
                         Log.i("MyAmplifyApp", todo.getTaskName());
-                        System.out.println("===================================================+: " + teamNameFromSetting.getClass().getSimpleName());
                         if(todo.getTeam() != null){
                             if(teamNameFromSetting.equals(todo.getTeam().getName())){
                                 taskList.add(todo);
-                                System.out.println(" ======================================+: " + teamNameFromSetting +" 00 "+ todo.getTeam().getName());
                             }
                         }
 

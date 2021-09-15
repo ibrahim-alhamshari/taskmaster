@@ -1,10 +1,13 @@
 package com.example.myapplication.Authentication;
 
+import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +20,7 @@ import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.auth.cognito.AWSCognitoAuthPlugin;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.AWSDataStorePlugin;
+import com.amplifyframework.storage.s3.AWSS3StoragePlugin;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
@@ -32,6 +36,8 @@ public class Registration extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         try {
+            Amplify.addPlugin(new AWSS3StoragePlugin());
+
             Amplify.addPlugin(new AWSApiPlugin());
             Amplify.addPlugin(new AWSDataStorePlugin());
             // Add this line, to include the Auth plugin.
@@ -65,17 +71,6 @@ public class Registration extends AppCompatActivity {
 
                     signInMethod(userName.getText().toString() , passWord.getText().toString());
 
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (test[0] == "error") {
-                    Toast.makeText(getApplicationContext() ,"ERROR, Incorrect Password or Username!" ,Toast.LENGTH_LONG );
-                }else if(test[0]== "success"){
-                    Toast.makeText(getApplicationContext() ,"Happy Register" ,Toast.LENGTH_LONG );
-                }
-                    Toast.makeText(getApplicationContext() ,"null Register" ,Toast.LENGTH_LONG );
             }
         });
 
@@ -95,22 +90,37 @@ public class Registration extends AppCompatActivity {
                 passWord,
                 result -> {
                     if (result.isSignInComplete()){
-                        test[0] ="success";
-                        System.out.println("*************************************");
+                        handler2();
                        startActivity(intent);
                     }
                     else{
-                        System.out.println("*************************************");
-                        test[0] ="faild";
                         System.out.println("ERROR!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     }
                 },
                 error -> {
-                    test[0] ="error";
-                    System.out.println("*************************************");
+                 handler();
                     Log.e("AuthQuickstart", error.toString());
                 }
         );
+
+
     }
 
+    public void  handler(){
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext() , "Incorrect username or password!" , Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    public void  handler2(){
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext() , "Success!" , Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }
