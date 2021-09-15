@@ -40,5 +40,11 @@
         ]
       }
     }
+  },
+  "storage": {
+    "s3886fea20": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation"
+    }
   }
 }

@@ -26,11 +26,13 @@ public final class GeneratedTaskModel implements Model {
   public static final QueryField TASK_NAME = field("GeneratedTaskModel", "taskName");
   public static final QueryField BODY = field("GeneratedTaskModel", "body");
   public static final QueryField STATE = field("GeneratedTaskModel", "state");
+  public static final QueryField FILE = field("GeneratedTaskModel", "file");
   public static final QueryField TEAM = field("GeneratedTaskModel", "teamId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String taskName;
   private final @ModelField(targetType="String", isRequired = true) String body;
   private final @ModelField(targetType="String") String state;
+  private final @ModelField(targetType="String") String file;
   private final @ModelField(targetType="Team") @BelongsTo(targetName = "teamId", type = Team.class) Team team;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
@@ -50,6 +52,10 @@ public final class GeneratedTaskModel implements Model {
       return state;
   }
   
+  public String getFile() {
+      return file;
+  }
+  
   public Team getTeam() {
       return team;
   }
@@ -62,11 +68,12 @@ public final class GeneratedTaskModel implements Model {
       return updatedAt;
   }
   
-  private GeneratedTaskModel(String id, String taskName, String body, String state, Team team) {
+  private GeneratedTaskModel(String id, String taskName, String body, String state, String file, Team team) {
     this.id = id;
     this.taskName = taskName;
     this.body = body;
     this.state = state;
+    this.file = file;
     this.team = team;
   }
   
@@ -82,6 +89,7 @@ public final class GeneratedTaskModel implements Model {
               ObjectsCompat.equals(getTaskName(), generatedTaskModel.getTaskName()) &&
               ObjectsCompat.equals(getBody(), generatedTaskModel.getBody()) &&
               ObjectsCompat.equals(getState(), generatedTaskModel.getState()) &&
+              ObjectsCompat.equals(getFile(), generatedTaskModel.getFile()) &&
               ObjectsCompat.equals(getTeam(), generatedTaskModel.getTeam()) &&
               ObjectsCompat.equals(getCreatedAt(), generatedTaskModel.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), generatedTaskModel.getUpdatedAt());
@@ -95,6 +103,7 @@ public final class GeneratedTaskModel implements Model {
       .append(getTaskName())
       .append(getBody())
       .append(getState())
+      .append(getFile())
       .append(getTeam())
       .append(getCreatedAt())
       .append(getUpdatedAt())
@@ -110,6 +119,7 @@ public final class GeneratedTaskModel implements Model {
       .append("taskName=" + String.valueOf(getTaskName()) + ", ")
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("state=" + String.valueOf(getState()) + ", ")
+      .append("file=" + String.valueOf(getFile()) + ", ")
       .append("team=" + String.valueOf(getTeam()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
@@ -145,6 +155,7 @@ public final class GeneratedTaskModel implements Model {
       null,
       null,
       null,
+      null,
       null
     );
   }
@@ -154,6 +165,7 @@ public final class GeneratedTaskModel implements Model {
       taskName,
       body,
       state,
+      file,
       team);
   }
   public interface TaskNameStep {
@@ -170,6 +182,7 @@ public final class GeneratedTaskModel implements Model {
     GeneratedTaskModel build();
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep state(String state);
+    BuildStep file(String file);
     BuildStep team(Team team);
   }
   
@@ -179,6 +192,7 @@ public final class GeneratedTaskModel implements Model {
     private String taskName;
     private String body;
     private String state;
+    private String file;
     private Team team;
     @Override
      public GeneratedTaskModel build() {
@@ -189,6 +203,7 @@ public final class GeneratedTaskModel implements Model {
           taskName,
           body,
           state,
+          file,
           team);
     }
     
@@ -213,6 +228,12 @@ public final class GeneratedTaskModel implements Model {
     }
     
     @Override
+     public BuildStep file(String file) {
+        this.file = file;
+        return this;
+    }
+    
+    @Override
      public BuildStep team(Team team) {
         this.team = team;
         return this;
@@ -230,11 +251,12 @@ public final class GeneratedTaskModel implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String taskName, String body, String state, Team team) {
+    private CopyOfBuilder(String id, String taskName, String body, String state, String file, Team team) {
       super.id(id);
       super.taskName(taskName)
         .body(body)
         .state(state)
+        .file(file)
         .team(team);
     }
     
@@ -251,6 +273,11 @@ public final class GeneratedTaskModel implements Model {
     @Override
      public CopyOfBuilder state(String state) {
       return (CopyOfBuilder) super.state(state);
+    }
+    
+    @Override
+     public CopyOfBuilder file(String file) {
+      return (CopyOfBuilder) super.file(file);
     }
     
     @Override

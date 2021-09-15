@@ -1,9 +1,12 @@
 package com.example.myapplication.Tasks;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,12 +24,22 @@ import com.amplifyframework.datastore.generated.model.Team;
 import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddTask extends AppCompatActivity {
 
     Team teamName = null;
+    String fileName;
+    private Uri fileData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -105,15 +118,58 @@ public class AddTask extends AppCompatActivity {
                 }
             }
         });
+
+        Button button = findViewById(R.id.uploadFile);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pickFile();
+            }
+        });
+    }
+
+    private void pickFile(){
+        Intent chooseFile=new Intent(Intent.ACTION_GET_CONTENT);
+        chooseFile.setType("*/*");
+        chooseFile= Intent.createChooser(chooseFile , "Choose file");
+        startActivityForResult(chooseFile , 1235);
     }
 
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Uri uri = data.getData(); // where data is the Intent returned in onActivityResult()
+        fileData=uri;
+
+        String src = uri.getPath();
+        fileName=src;
+
+    }
+
     private void saveNewTask(String title , String body , String state){
+
+        if (fileData != null) {
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(fileData);
+                Amplify.Storage.uploadInputStream(
+                        fileName,
+                        inputStream,
+                        result -> Log.i("MyAmplifyApp", "Successfully uploaded: " + result.getKey()),
+                        storageFailure -> Log.e("MyAmplifyApp", "Upload failed", storageFailure)
+                );
+            } catch (FileNotFoundException error) {
+                Log.e("MyAmplifyApp", "Could not find file to open for input stream.", error);
+            }
+        }
+
 
         GeneratedTaskModel generatedTaskModel = GeneratedTaskModel.builder()  //creating the tasks instance
                     .taskName(title)
                     .body(body)
                     .state(state)
+                    .file(fileName)
                     .team(teamName)
                     .build();
 
