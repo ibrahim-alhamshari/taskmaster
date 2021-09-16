@@ -35,6 +35,8 @@ public class Registration extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
+
+
         try {
             Amplify.addPlugin(new AWSS3StoragePlugin());
 
@@ -43,12 +45,25 @@ public class Registration extends AppCompatActivity {
             // Add this line, to include the Auth plugin.
             Amplify.addPlugin(new AWSCognitoAuthPlugin());
             Amplify.configure(getApplicationContext());
+
             Log.i("Tutorial", "Initialized Amplify");
         } catch (AmplifyException failure) {
             Log.e("Tutorial", "Could not initialize Amplify", failure);
         }
 
-
+        Intent intent = new Intent(Registration.this , MainActivity.class);
+        Amplify.Auth.fetchAuthSession(
+                result ->{
+                    Log.i("AmplifyQuickstart", "successfully signIn");
+//                    try {
+//                        Thread.sleep(2000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                    startActivity(intent);
+                } ,
+                error -> Log.e("AmplifyQuickstart", "You need to signIn")
+        );
 
         Button signUp = findViewById(R.id.signUpButton);
 
@@ -65,25 +80,28 @@ public class Registration extends AppCompatActivity {
         EditText userName= findViewById(R.id.userNameRegester);
         EditText passWord=findViewById(R.id.editTextTextPassword);
 
+
+
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                     signInMethod(userName.getText().toString() , passWord.getText().toString());
-
             }
         });
-
-
     }
     public void signInMethod(String userName, String passWord){
         Intent intent= new Intent(Registration.this, MainActivity.class);
+
+        System.out.println(userName);
+        System.out.println(passWord+ "========================================");
 
         SharedPreferences sharedPreferences= PreferenceManager.getDefaultSharedPreferences(Registration.this);
         SharedPreferences.Editor sharedPreferenceEditor= sharedPreferences.edit();
 
         sharedPreferenceEditor.putString("userRegester" , userName);
         sharedPreferenceEditor.apply();
+
 
         Amplify.Auth.signIn(
                 userName,
