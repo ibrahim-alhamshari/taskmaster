@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -40,6 +41,7 @@ public class AddTask extends AppCompatActivity {
     Team teamName = null;
     String fileName;
     private Uri fileData;
+    private String bodyFromAnotherApp=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -48,21 +50,25 @@ public class AddTask extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
+        Intent recive = getIntent();
+        if(recive.getType() != null && recive.getType().equals("text/plain")){
+            Log.i("Hello world" , recive.getExtras().get(Intent.EXTRA_TEXT).toString());
+            bodyFromAnotherApp=recive.getExtras().get(Intent.EXTRA_TEXT).toString();
+        }
 
         List<Team> teamList = new ArrayList<>();
-
         Amplify.API.query(
                 ModelQuery.list(Team.class),
                 response -> {
                     for (Team todo : response.getData()) {
                         Log.i("MyAmplifyApp", todo.getName());
-                        System.out.println("000000000000000000000000000000000000000000000000" + todo.getName());
                         teamList.add(todo);
                     }
                 },
                 error -> Log.e("MyAmplifyApp", "Query failure", error)
         );
 
+//***************************************************** Spinner start ***********************************************
 
         Spinner spinner=findViewById(R.id.spinnerButton);
 
@@ -84,11 +90,9 @@ public class AddTask extends AppCompatActivity {
                 for (int i = 0; i < teamList.size(); i++) {
                     if(teamList.get(i).getName().equals(text)){
                         teamName = teamList.get(i);
-                        System.out.println(teamName.getName().toString()+ "++++++++++++++++++++++++++++++++++++++++++++++++++++");
                     }
                 }
 
-//                teamName[0] =text;
                 Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
             }
 
@@ -97,6 +101,9 @@ public class AddTask extends AppCompatActivity {
 
             }
         });
+//***************************************************** Spinner End **********************************************
+
+//***************************************************** Get data start *******************************************
 
         EditText title = findViewById(R.id.titleInAddTask);
         EditText body = findViewById(R.id.bodyInAddTask);
@@ -110,7 +117,14 @@ public class AddTask extends AppCompatActivity {
             public void onClick(View view) {
                 if(teamName!=null){
                     Toast.makeText(getApplicationContext(),"submitted!" , Toast.LENGTH_LONG).show();
+
+                    if(bodyFromAnotherApp!=null){
+                        saveNewTask(title.getText().toString() ,bodyFromAnotherApp , state.getText().toString());
+                        bodyFromAnotherApp=null;
+                    }else {
                     saveNewTask(title.getText().toString() , body.getText().toString(), state.getText().toString() );
+                    }
+
                     Intent intent = new Intent(AddTask.this, MainActivity.class);
                     startActivity(intent);
                 }else {
@@ -126,17 +140,18 @@ public class AddTask extends AppCompatActivity {
                 pickFile();
             }
         });
+//***************************************************** Get data End *******************************************
     }
 
     private void pickFile(){
         Intent chooseFile=new Intent(Intent.ACTION_GET_CONTENT);
         chooseFile.setType("*/*");
         chooseFile= Intent.createChooser(chooseFile , "Choose file");
-        startActivityForResult(chooseFile , 1235);
+        startActivityForResult(chooseFile , 1235); // Activity is started with requestCode 1235
     }
 
 
-    @Override
+    @Override  // Call Back method  to get the Message form other Activity
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -145,7 +160,6 @@ public class AddTask extends AppCompatActivity {
 
         String src = uri.getPath();
         fileName=src;
-
     }
 
     private void saveNewTask(String title , String body , String state){
