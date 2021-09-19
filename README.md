@@ -156,3 +156,12 @@
 <br>
 
 ![addTask](screenshots/lab37/addTask.jpg)
+
+<br>
+
+## **Lab41**
+- **Feature Tasks**
+  - Adding a Task from Another Application
+  - Add an intent filter to your application such that a user can hit the “share” button on a text in another application, choose TaskMaster as the app to share that image with, and be taken directly to the Add a Task activity with that text pre-selected.
+
+
