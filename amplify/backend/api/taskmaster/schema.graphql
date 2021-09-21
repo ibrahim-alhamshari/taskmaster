@@ -4,6 +4,8 @@ type GeneratedTaskModel @model @key(name:"byTeam" , fields: ["teamId", "taskName
   body: String!
   state: String
   file: String
+  latitude: String
+  longitude: String
   teamId: ID!
   team: Team @connection(fields:["teamId"])
 }

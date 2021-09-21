@@ -27,12 +27,16 @@ public final class GeneratedTaskModel implements Model {
   public static final QueryField BODY = field("GeneratedTaskModel", "body");
   public static final QueryField STATE = field("GeneratedTaskModel", "state");
   public static final QueryField FILE = field("GeneratedTaskModel", "file");
+  public static final QueryField LATITUDE = field("GeneratedTaskModel", "latitude");
+  public static final QueryField LONGITUDE = field("GeneratedTaskModel", "longitude");
   public static final QueryField TEAM = field("GeneratedTaskModel", "teamId");
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String", isRequired = true) String taskName;
   private final @ModelField(targetType="String", isRequired = true) String body;
   private final @ModelField(targetType="String") String state;
   private final @ModelField(targetType="String") String file;
+  private final @ModelField(targetType="Double") Double latitude;
+  private final @ModelField(targetType="Double") Double longitude;
   private final @ModelField(targetType="Team") @BelongsTo(targetName = "teamId", type = Team.class) Team team;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime createdAt;
   private @ModelField(targetType="AWSDateTime", isReadOnly = true) Temporal.DateTime updatedAt;
@@ -56,6 +60,14 @@ public final class GeneratedTaskModel implements Model {
       return file;
   }
   
+  public Double getLatitude() {
+      return latitude;
+  }
+  
+  public Double getLongitude() {
+      return longitude;
+  }
+  
   public Team getTeam() {
       return team;
   }
@@ -68,12 +80,14 @@ public final class GeneratedTaskModel implements Model {
       return updatedAt;
   }
   
-  private GeneratedTaskModel(String id, String taskName, String body, String state, String file, Team team) {
+  private GeneratedTaskModel(String id, String taskName, String body, String state, String file, Double latitude, Double longitude, Team team) {
     this.id = id;
     this.taskName = taskName;
     this.body = body;
     this.state = state;
     this.file = file;
+    this.latitude = latitude;
+    this.longitude = longitude;
     this.team = team;
   }
   
@@ -90,6 +104,8 @@ public final class GeneratedTaskModel implements Model {
               ObjectsCompat.equals(getBody(), generatedTaskModel.getBody()) &&
               ObjectsCompat.equals(getState(), generatedTaskModel.getState()) &&
               ObjectsCompat.equals(getFile(), generatedTaskModel.getFile()) &&
+              ObjectsCompat.equals(getLatitude(), generatedTaskModel.getLatitude()) &&
+              ObjectsCompat.equals(getLongitude(), generatedTaskModel.getLongitude()) &&
               ObjectsCompat.equals(getTeam(), generatedTaskModel.getTeam()) &&
               ObjectsCompat.equals(getCreatedAt(), generatedTaskModel.getCreatedAt()) &&
               ObjectsCompat.equals(getUpdatedAt(), generatedTaskModel.getUpdatedAt());
@@ -104,6 +120,8 @@ public final class GeneratedTaskModel implements Model {
       .append(getBody())
       .append(getState())
       .append(getFile())
+      .append(getLatitude())
+      .append(getLongitude())
       .append(getTeam())
       .append(getCreatedAt())
       .append(getUpdatedAt())
@@ -120,6 +138,8 @@ public final class GeneratedTaskModel implements Model {
       .append("body=" + String.valueOf(getBody()) + ", ")
       .append("state=" + String.valueOf(getState()) + ", ")
       .append("file=" + String.valueOf(getFile()) + ", ")
+      .append("latitude=" + String.valueOf(getLatitude()) + ", ")
+      .append("longitude=" + String.valueOf(getLongitude()) + ", ")
       .append("team=" + String.valueOf(getTeam()) + ", ")
       .append("createdAt=" + String.valueOf(getCreatedAt()) + ", ")
       .append("updatedAt=" + String.valueOf(getUpdatedAt()))
@@ -156,6 +176,8 @@ public final class GeneratedTaskModel implements Model {
       null,
       null,
       null,
+      null,
+      null,
       null
     );
   }
@@ -166,6 +188,8 @@ public final class GeneratedTaskModel implements Model {
       body,
       state,
       file,
+      latitude,
+      longitude,
       team);
   }
   public interface TaskNameStep {
@@ -183,6 +207,8 @@ public final class GeneratedTaskModel implements Model {
     BuildStep id(String id) throws IllegalArgumentException;
     BuildStep state(String state);
     BuildStep file(String file);
+    BuildStep latitude(Double latitude);
+    BuildStep longitude(Double longitude);
     BuildStep team(Team team);
   }
   
@@ -193,6 +219,8 @@ public final class GeneratedTaskModel implements Model {
     private String body;
     private String state;
     private String file;
+    private Double latitude;
+    private Double longitude;
     private Team team;
     @Override
      public GeneratedTaskModel build() {
@@ -204,6 +232,8 @@ public final class GeneratedTaskModel implements Model {
           body,
           state,
           file,
+          latitude,
+          longitude,
           team);
     }
     
@@ -234,6 +264,18 @@ public final class GeneratedTaskModel implements Model {
     }
     
     @Override
+     public BuildStep latitude(Double latitude) {
+        this.latitude = latitude;
+        return this;
+    }
+    
+    @Override
+     public BuildStep longitude(Double longitude) {
+        this.longitude = longitude;
+        return this;
+    }
+    
+    @Override
      public BuildStep team(Team team) {
         this.team = team;
         return this;
@@ -251,12 +293,14 @@ public final class GeneratedTaskModel implements Model {
   
 
   public final class CopyOfBuilder extends Builder {
-    private CopyOfBuilder(String id, String taskName, String body, String state, String file, Team team) {
+    private CopyOfBuilder(String id, String taskName, String body, String state, String file, Double latitude, Double longitude, Team team) {
       super.id(id);
       super.taskName(taskName)
         .body(body)
         .state(state)
         .file(file)
+        .latitude(latitude)
+        .longitude(longitude)
         .team(team);
     }
     
@@ -278,6 +322,16 @@ public final class GeneratedTaskModel implements Model {
     @Override
      public CopyOfBuilder file(String file) {
       return (CopyOfBuilder) super.file(file);
+    }
+    
+    @Override
+     public CopyOfBuilder latitude(Double latitude) {
+      return (CopyOfBuilder) super.latitude(latitude);
+    }
+    
+    @Override
+     public CopyOfBuilder longitude(Double longitude) {
+      return (CopyOfBuilder) super.longitude(longitude);
     }
     
     @Override

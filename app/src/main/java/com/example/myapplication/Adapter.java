@@ -44,6 +44,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.TaskViewHolder> {
                     intent.putExtra("body" , task.getBody());
                     intent.putExtra("state" , task.getState());
                     intent.putExtra("fileData" , task.getFile());
+                    intent.putExtra("latitude" , task.getLatitude());
+                    intent.putExtra("longitude" , task.getLongitude());
                     view.getContext().startActivity(intent);
                 }
             });
