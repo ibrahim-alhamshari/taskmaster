@@ -87,9 +87,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
     private final List<GeneratedTaskModel> taskList = new ArrayList<>();
     private RecyclerView recyclerView;
     String teamNameFromSetting = null;
